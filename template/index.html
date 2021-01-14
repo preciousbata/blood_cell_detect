@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blood Sample Detection API</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+<!--===============================================================================================-->
+</head>
+
+<style>
+body {
+  background-image: url(static/images/image.jpg);"
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style>
+
+<div class="wrapper">
+    <div class="container">
+        <h1>Upload a Blood Sample Image</h1>
+        <div class="upload-container">
+        <div class="border-container">
+        <div class="icons fa-4x">
+            <i class="fa fa-file-image-o" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+<!--            <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>-->
+<!--            <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>-->
+        </div>
+<!--<input type="file" id="file-upload">-->
+            <form action='/predict' method=post enctype=multipart/form-data>
+                <br>
+                <input type="file" name="image">
+                <input type="submit" value="Predict">
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='js/main.js')}}"></script>
+</html>
