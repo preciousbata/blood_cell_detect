@@ -4,3 +4,4 @@ jsonpickle
 pillow
 numpy
 opencv-python
+gunicorn
