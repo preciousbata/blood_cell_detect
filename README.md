@@ -1,4 +1,4 @@
-blood_cell_detect
+#Blood_Cell_Detect
 
 This is a demo project to elaborate a Deep Learning Models detecting and classifying blood cell images, the model is deployed on production using Flask API
 
