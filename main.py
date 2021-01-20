@@ -19,13 +19,6 @@ confthres = 0.3
 nmsthres = 0.1
 yolo_path = './'
 
-
-def allowed_file(filename):
-    # allowing the right file format
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 def get_labels(labels_path):
     # load the class labels our YOLO model was trained on
     # labelsPath = os.path.sep.join([yolo_path, "yolo_v3/coco.names"])
@@ -149,8 +142,6 @@ def get_prediction(image, net, LABELS, COLORS):
     return image
 
 
-# allowed extensions
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 # paths
 labelsPath = "./obj.names"
@@ -164,6 +155,7 @@ Colors = get_colors(Lables)
 
 # Initialize the Flask application
 app = Flask(__name__,template_folder='template')
+port = int(os.environ.get('PORT', 5000))
 
 @app.route('/', methods=['POST','GET'])
 def home():
@@ -211,4 +203,4 @@ def upload_predict():
 
 # running in html
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(host='0.0.0.0', port=port, debug=True))
