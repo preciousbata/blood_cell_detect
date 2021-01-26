@@ -12,9 +12,9 @@ This project has four major parts :
 
 .weights- This contains trained weight for the deep learning model.
 
-app.py - This contains Flask APIs that receives users input through GUI or API calls, computes the precited value based on our model and returns it. 
+app.py - This contains Flask APIs that receives users input through GUI or API calls and the detection code. 
 
-templates - This folder contains the HTML template to allow user to enter health details and displays the predicted probability of having a cardiovascular disease.
+templates - This folder contains the HTML template to allow user to upload images.
 
 Training the project
 
