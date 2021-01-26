@@ -19,7 +19,7 @@ templates - This folder contains the HTML template to allow user to upload image
 Training the project
 
 Training for this model was done on google colab using the free provided gpu, at the end of the taring a weight file is created 
--yolov3-custom_last.weight soted in the backup folder created.
+-yolov3-custom_last.weight saved in the backup folder created.
 
 Run app.py using below command to start Flask API 
 
