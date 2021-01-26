@@ -152,6 +152,7 @@ CFG = get_config(cfgpath)
 Weights = get_weights(wpath)
 nets = load_model(CFG, Weights)
 Colors = get_colors(Lables)
+# Author - https://gist.github.com/Jargon4072/e1ffdb272dbef7aaa14e4314ba905828#file-detect-py
 
 # Initialize the Flask application
 app = Flask(__name__,template_folder='template')
