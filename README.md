@@ -18,10 +18,11 @@ Training the project
 Training for this model was done on google colab using the free provided gpu, at the end of the taring a weight file is created 
 -yolov3-custom_last.weight 
 
-Run app.py using below command to start Flask API python app.py By default, flask will run on port 5000.
+Run app.py using below command to start Flask API, python app.py 
+By default, flask will run on port 5000.
 
 Navigate to URL http://localhost:5000 You should be able to view the homepage as below
 
 Enter valid image and hit Predict.
 
-If everything goes well, you should be able to see the predcited vaule on the HTML page! 
+If everything goes well, you should be able to see the predicted value on the HTML page! 
