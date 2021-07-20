@@ -4,11 +4,7 @@ from train import *
 import cv2
 import os
 from flask import Flask, request, Response, jsonify, render_template
-import jsonpickle
-import binascii
-import io as StringIO
-import base64
-from io import BytesIO
+import logging
 import io
 import json
 from PIL import Image
@@ -22,9 +18,16 @@ Weights = get_weights(wpath)
 nets = load_model(CFG, Weights)
 Colors = get_colors(Lables)
 
+# Step 2: Preparing Logging
+logging.basicConfig(filename=r'C:\Users\Dell\Documents\GitHub\blood_cell_detect\Logs\response.logs',
+                    level=logging.DEBUG,
+                    filemode='w',
+                    format='%(asctime)s %(levelname)s %(name)s  %(message)s')
+logger = logging.getLogger()
 
 # Initialize the Flask application
-app = Flask(__name__, template_folder='template')
+app = Flask(__name__, template_folder=r'C:\Users\Dell\Documents\GitHub\blood_cell_detect\template',
+            static_folder=r'C:\Users\Dell\Documents\GitHub\blood_cell_detect\static')
 port = int(os.environ.get('PORT', 5000))
 
 @app.route('/', methods=['POST','GET'])

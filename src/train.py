@@ -26,7 +26,8 @@ wpath = config.WEIGHT_PATH
 def get_labels(labels_path):
     # load the class labels our YOLO model was trained on
     # labelsPath = os.path.sep.join([yolo_path, "yolo_v3/coco.names"])
-    lpath = os.path.sep.join([yolo_path, labels_path])
+    # lpath = os.path.sep.join([yolo_path, labels_path])
+    lpath = labelsPath
     LABELS = open(lpath).read().strip().split("\n")
     return LABELS
 
@@ -40,12 +41,14 @@ def get_colors(LABELS):
 
 def get_weights(weights_path):
     # derive the paths to the YOLO weights and model configuration
-    weightsPath = os.path.sep.join([yolo_path, weights_path])
+    # weightsPath = os.path.sep.join([yolo_path, weights_path])
+    weightsPath = wpath
     return weightsPath
 
 
 def get_config(config_path):
-    configPath = os.path.sep.join([yolo_path, config_path])
+    # configPath = os.path.sep.join([yolo_path, config_path])
+    configPath = cfgpath
     return configPath
 
 
