@@ -1,6 +1,6 @@
 # Blood_Cell_Detect
 
-This is a demo project to elaborate a Deep Learning Models detecting and classifying blood cell images, the model is deployed on production using Flask API
+This is a project to elaborate a Deep Learning Models localizing and classifying differnt types of blood cell in a image, the model is deployed using Flask API
 
 Prerequisites
 
@@ -8,21 +8,21 @@ You must have yolov3,open cv and Flask (for API) installed.
 
 Project Structure
 
-This project has four major parts : 
-.weights- This contains trained weight for the deep learning model 
-app.py - This contains Flask APIs that receives users input through GUI or API calls, computes the precited value based on our model and returns it. 
-templates - This folder contains the HTML template to allow user to enter health details and displays the predicted probability of having a cardiovascular disease.
+This project has major folders namely :
 
-Training the project
+1.  src - which contain all the source code ( i.e app.py, config.py, train.py)
 
-Training for this model was done on google colab using the free provided gpu, at the end of the taring a weight file is created 
--yolov3-custom_last.weight 
+2.  template -  which contain HTML template frontend for the web app
 
-Run app.py using below command to start Flask API, python app.py 
+3.  inputs -  contain the YOLOv3 weight and configuaration
+
+RUNNING THE APP
+
+1.  Run app.py using the command on your terminal to start Flask API, python app.py 
 By default, flask will run on port 5000.
 
-Navigate to URL http://localhost:5000 You should be able to view the homepage as below
+2.  Navigate to URL http://localhost:5000 You should be able to view the homepage as below
 
-Enter valid image and hit Predict.
+3.  Enter valid image and hit Predict.
 
-If everything goes well, you should be able to see the predicted value on the HTML page! 
+If everything goes well, you should be able to see the predicted image on the HTML page! 
