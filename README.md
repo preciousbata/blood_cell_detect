@@ -18,7 +18,8 @@ This project has major folders namely :
 
 RUNNING THE APP
 
-1.  Run app.py using the command on your terminal to start Flask API, python app.py 
+1. Navigate  to the app.py in the src folder and run the app.py file using the command "python app.py" on your terminal to start Flask API 
+
 By default, flask will run on port 5000.
 
 2.  Navigate to URL http://localhost:5000 You should be able to view the homepage as below
