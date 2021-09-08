@@ -1,0 +1,134 @@
+Index: src/app.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># import the necessary packages\r\nimport numpy as np\r\nfrom train import *\r\nimport cv2\r\nimport os\r\nfrom flask import Flask, request, Response, jsonify, render_template\r\nimport logging\r\nimport io\r\nimport json\r\nfrom PIL import Image\r\n\r\n\r\n# paths\r\n\r\nLables = get_labels(labelsPath)\r\nCFG = get_config(cfgpath)\r\nWeights = get_weights(wpath)\r\nnets = load_model(CFG, Weights)\r\nColors = get_colors(Lables)\r\n\r\n# Step 2: Preparing Logging\r\nlogging.basicConfig(filename=r'C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\Logs\\response.logs',\r\n                    level=logging.DEBUG,\r\n                    filemode='w',\r\n                    format='%(asctime)s %(levelname)s %(name)s  %(message)s')\r\nlogger = logging.getLogger()\r\n\r\n# Initialize the Flask application\r\napp = Flask(__name__, template_folder=r'C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\template',\r\n            static_folder=r'C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\static')\r\nport = int(os.environ.get('PORT', 5000))\r\n\r\n@app.route('/', methods=['POST','GET'])\r\ndef home():\r\n    return render_template('index.html')\r\n\r\n# route http posts to this method\r\n@app.route('/predict', methods=['POST','GET'])\r\ndef upload_predict():\r\n    try:\r\n        if request.method == 'POST':\r\n            img = request.files[\"image\"].read()\r\n            img = Image.open(io.BytesIO(img))\r\n            npimg = np.array(img)\r\n            image = npimg.copy()\r\n            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)\r\n            res = get_prediction(image, nets, Lables, Colors)\r\n        # image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)\r\n        # show the output image\r\n        # cv2.imshow(\"Image\", res)\r\n        # cv2.waitKey()\r\n            image = cv2.cvtColor(res, cv2.COLOR_BGR2RGB)\r\n            np_img = Image.fromarray(image)\r\n            img_encoded = image_to_byte_array(np_img)\r\n            return Response(response=img_encoded, status=200, mimetype=\"image/jpeg\")\r\n        return render_template('index.html')\r\n    except TypeError:\r\n        print('Invalid File type')\r\n\r\n\r\n\r\n#Test on file upload from local machine\r\n# def main():\r\n#     # load our input image and grab its spatial dimensions\r\n#     image = cv2.imread(\"./BloodImage_00000.jpg\")\r\n#     res = get_prediction(image, nets, Lables, Colors)\r\n#     # image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)\r\n#     # show the output image\r\n#     cv2.imshow(\"Image\", res)\r\n#     cv2.waitKey()\r\n\r\n# run from local machijne\r\n# start flask app\r\n# if __name__ == '__main__':\r\n#     main()\r\n\r\n# running in html\r\nif __name__ == '__main__':\r\n    app.run(host='0.0.0.0', port=port, debug=True)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app.py b/src/app.py
+--- a/src/app.py	(revision 1673f00634f06803a21b952661dd9296883d3df4)
++++ b/src/app.py	(date 1631122677999)
+@@ -11,29 +11,24 @@
+ 
+ 
+ # paths
+-
+ Lables = get_labels(labelsPath)
+ CFG = get_config(cfgpath)
+ Weights = get_weights(wpath)
+ nets = load_model(CFG, Weights)
+ Colors = get_colors(Lables)
+ 
+-# Step 2: Preparing Logging
+-logging.basicConfig(filename=r'C:\Users\Dell\Documents\GitHub\blood_cell_detect\Logs\response.logs',
+-                    level=logging.DEBUG,
+-                    filemode='w',
+-                    format='%(asctime)s %(levelname)s %(name)s  %(message)s')
+-logger = logging.getLogger()
+ 
+ # Initialize the Flask application
+ app = Flask(__name__, template_folder=r'C:\Users\Dell\Documents\GitHub\blood_cell_detect\template',
+             static_folder=r'C:\Users\Dell\Documents\GitHub\blood_cell_detect\static')
+-port = int(os.environ.get('PORT', 5000))
++# port = int(os.environ.get('PORT', 5000))
++
+ 
+ @app.route('/', methods=['POST','GET'])
+ def home():
+     return render_template('index.html')
+ 
++
+ # route http posts to this method
+ @app.route('/predict', methods=['POST','GET'])
+ def upload_predict():
+@@ -45,10 +40,6 @@
+             image = npimg.copy()
+             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+             res = get_prediction(image, nets, Lables, Colors)
+-        # image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+-        # show the output image
+-        # cv2.imshow("Image", res)
+-        # cv2.waitKey()
+             image = cv2.cvtColor(res, cv2.COLOR_BGR2RGB)
+             np_img = Image.fromarray(image)
+             img_encoded = image_to_byte_array(np_img)
+@@ -58,22 +49,5 @@
+         print('Invalid File type')
+ 
+ 
+-
+-#Test on file upload from local machine
+-# def main():
+-#     # load our input image and grab its spatial dimensions
+-#     image = cv2.imread("./BloodImage_00000.jpg")
+-#     res = get_prediction(image, nets, Lables, Colors)
+-#     # image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+-#     # show the output image
+-#     cv2.imshow("Image", res)
+-#     cv2.waitKey()
+-
+-# run from local machijne
+-# start flask app
+-# if __name__ == '__main__':
+-#     main()
+-
+-# running in html
+ if __name__ == '__main__':
+-    app.run(host='0.0.0.0', port=port, debug=True)
++    app.run(debug=True)
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"d5bf3338-03c8-4f74-8c55-d98f3c68d56b\" name=\"Default Changelist\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1vPyoP0Hr2oSS452vxrfnsOg9BC\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/sample.py\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.lookFeel\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\" />\r\n      <recent name=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\src\" />\r\n      <recent name=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\inputs\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.app\">\r\n    <configuration name=\"app\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"blood_cell_detect\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/src\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/src/app.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"config\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"blood_cell_detect\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/src\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/src/config.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"sample\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"blood_cell_detect\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/sample.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"train\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"blood_cell_detect\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"C:\\Users\\Dell\\Documents\\GitHub\\blood_cell_detect\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/src\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/src/train.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Python.config\" />\r\n      <item itemvalue=\"Python.train\" />\r\n      <item itemvalue=\"Python.app\" />\r\n      <item itemvalue=\"Python.sample\" />\r\n    </list>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"d5bf3338-03c8-4f74-8c55-d98f3c68d56b\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1626478195821</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1626478195821</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"restructure code\">\r\n      <created>1626781691283</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1626781691283</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"restructure code\">\r\n      <created>1626788309811</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1626788309811</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"restructure code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"restructure code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1673f00634f06803a21b952661dd9296883d3df4)
++++ b/.idea/workspace.xml	(date 1631121871589)
+@@ -1,7 +1,10 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="d5bf3338-03c8-4f74-8c55-d98f3c68d56b" name="Default Changelist" comment="" />
++    <list default="true" id="d5bf3338-03c8-4f74-8c55-d98f3c68d56b" name="Default Changelist" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -38,17 +41,17 @@
+   </component>
+   <component name="RunManager" selected="Python.app">
+     <configuration name="app" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+-      <module name="blood_cell_detect" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+       <envs>
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+-      <option name="SDK_HOME" value="C:\Users\Dell\Documents\GitHub\blood_cell_detect\venv\Scripts\python.exe" />
++      <option name="SDK_HOME" value="C:\Users\Dell\AppData\Local\Programs\Python\Python37\python.exe" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+       <option name="IS_MODULE_SDK" value="false" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
++      <module name="" />
+       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/app.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+@@ -122,10 +125,10 @@
+       <method v="2" />
+     </configuration>
+     <list>
++      <item itemvalue="Python.app" />
+       <item itemvalue="Python.config" />
++      <item itemvalue="Python.sample" />
+       <item itemvalue="Python.train" />
+-      <item itemvalue="Python.app" />
+-      <item itemvalue="Python.sample" />
+     </list>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
