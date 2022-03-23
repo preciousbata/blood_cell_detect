@@ -30,6 +30,8 @@ This project has essential folders such as:
   5. Click on the link to 'http://localhost:5000' to access the web page
   6. Upload Valid Blood Sample image and click predict.
   7. If successful, a respose will be displayed on the browser
+## Screenshot
+[![Screenshot-14.png](https://i.postimg.cc/ZqcCk0yb/Screenshot-14.png)](https://postimg.cc/jWDsPxXm)
 
 ## Helpful Links
   * [YOLOV3 INSTALLATION]()
