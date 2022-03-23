@@ -1,29 +1,35 @@
 # Blood_Cell_Detect
 
-This is a project to elaborate a Deep Learning Models localizing and classifying differnt types of blood cell in a image, the model is deployed using Flask API
+## Project Overview
 
-Prerequisites
+This is a project to elaborate a Deep Learning Models localizing and classifying differnt types of blood cell in an image. The model is deployed on Azure using Flask 
+  * Deployed on Azure: [Project link]()
+  
+## Technologies Used 
+  * Python as the programming language
+  * YOLOV3 for deep learning taining
+  * Azure for cloud deployment
 
-You must have yolov3,open cv and Flask (for API) installed.
+## Prerequisites
 
-Project Structure
+Install the latest version of YOLOV3, openCV and your favourite IDE.
 
-This project has major folders namely :
+## Project Structure
 
-1.  src - which contain all the source code ( i.e app.py, config.py, train.py)
+This project has essential folders such as:
+  * Template: This folder contains the HTML template  which serves as the front end for user interface.
+  * Input: Contains YOLO weight and configurations
+  * src: This folder contains source codes such as config.py, app.py, model.py
+  * Static: This folder contain css files, javascript files, images
+ 
+## Running the Project
+  1. Open the command prompt and navigate to project directory
+  2. Install the necessary libraries and packages in the requirements file using the command----------> **pip -r requirements.txt**
+  3. Change directory from the **root** folder into **src** folder by using the command---------------> **cd src**
+  4. Once in the src folder, Run the command **python app.py**. The app will be hosted on your local machine on the default port 5000.
+  5. Click on the link to 'http://localhost:5000' to access the web page
+  6. Upload Valid Blood Sample image and click predict.
+  7. If successful, a respose will be displayed on the browser
 
-2.  template -  which contain HTML template frontend for the web app
-
-3.  inputs -  contain the YOLOv3 weight and configuaration
-
-RUNNING THE APP
-
-1. Navigate  to the app.py in the src folder and run the app.py file using the command python app.py on your terminal to start Flask API 
-
-By default, flask will run on port 5000.
-
-2.  Navigate to URL http://localhost:5000 You should be able to view the homepage as below
-
-3.  Enter valid image and hit Predict.
-
-If everything goes well, you should be able to see the predicted image on the HTML page! 
+## Helpful Links
+  * [YOLOV3 INSTALLATION]()
