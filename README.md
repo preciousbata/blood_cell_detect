@@ -8,7 +8,6 @@ This is a project to elaborate a Deep Learning Models localizing and classifying
 ## Technologies Used 
   * Python as the programming language
   * YOLOV3 for deep learning taining
-  * Azure for cloud deployment
 
 ## Prerequisites
 
@@ -24,7 +23,7 @@ This project has essential folders such as:
  
 ## Running the Project
   1. Open the command prompt and navigate to project directory
-  2. Install the necessary libraries and packages in the requirements file using the command----------> **pip -r requirements.txt**
+  2. Install the necessary libraries and packages in the requirements file using the command----------> **pip  install -r requirements.txt**
   3. Change directory from the **root** folder into **src** folder by using the command---------------> **cd src**
   4. Once in the src folder, Run the command **python app.py**. The app will be hosted on your local machine on the default port 5000.
   5. Click on the link to 'http://localhost:5000' to access the web page
